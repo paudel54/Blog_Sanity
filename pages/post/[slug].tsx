@@ -17,6 +17,7 @@ type Inputs = {
   name: string;
   email: string;
   comment: string;
+  example: string;
 };
 
 const Post = ({ post }: Props) => {
@@ -134,7 +135,7 @@ const Post = ({ post }: Props) => {
                 Name
               </span>
               <input
-                {...(register("name"), { required: true })}
+                {...register("name", { required: true })}
                 className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor
                 py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
                 type="text"
@@ -146,7 +147,7 @@ const Post = ({ post }: Props) => {
                 Email
               </span>
               <input
-                {...(register("email"), { required: true })}
+                {...register("email", { required: true })}
                 className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor
                 py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
                 type="email"
@@ -158,13 +159,14 @@ const Post = ({ post }: Props) => {
                 Comment
               </span>
               <textarea
-                {...(register("comment"), { required: true })}
+                {...register("comment", { required: true })}
                 className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor
                 py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
                 placeholder="Enter Your Comments"
                 rows={6}
               />
             </label>
+
             <button
               className="w-full bg-bgColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm
             hover:bg-secondaryColor duration-300"
