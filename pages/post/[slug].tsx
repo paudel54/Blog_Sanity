@@ -2,10 +2,11 @@ import { GetStaticProps } from "next";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import { sanityClient, urlFor } from "../../sanity";
-import { Post } from "../../typings";
+import { Post, comments } from "../../typings";
 import PortableText from "react-portable-text";
 import { BsTypeH1 } from "react-icons/bs";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
 
 interface Props {
   post: Post;
@@ -21,6 +22,7 @@ type Inputs = {
 };
 
 const Post = ({ post }: Props) => {
+  const [submitted, setSubmitted] = useState(false);
   const {
     register,
     handleSubmit,
@@ -28,8 +30,18 @@ const Post = ({ post }: Props) => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log("Checking User data ");
-    console.log("Here contains the logged data", data);
+    // console.log("Checking User data ");
+    // console.log("Here contains the logged data", data);
+    fetch("/api/createComment", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then(() => {
+        setSubmitted(true);
+      })
+      .catch((err) => {
+        setSubmitted(false);
+      });
   };
   // const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
@@ -175,6 +187,19 @@ const Post = ({ post }: Props) => {
               Submit
             </button>
           </form>
+          {/* People's Comment Here */}
+          <div className="w-full flex flex-col p-10 my-10 mx-auto shadow-bgColor shadow-lg space-y-2">
+            <h3 className="text-3xl font-titleFont font-semibold">Comments</h3>
+            <hr />
+            {post.comments.map((comment) => (
+              <div key={comment._id}>
+                <p>
+                  <span className="text-secondaryColor"> {comment.name}</span>{" "}
+                  {comment.comment}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <Footer />
@@ -217,6 +242,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             name,
             image,
           },
+          "comments":*[_type == "comment" && post._ref == ^._id && approved == true],
           description,
           mainImage,
           slug,
