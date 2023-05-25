@@ -5,12 +5,33 @@ import { sanityClient, urlFor } from "../../sanity";
 import { Post } from "../../typings";
 import PortableText from "react-portable-text";
 import { BsTypeH1 } from "react-icons/bs";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 interface Props {
   post: Post;
 }
 
+// TypeScript Input defn
+type Inputs = {
+  _id: string;
+  name: string;
+  email: string;
+  comment: string;
+};
+
 const Post = ({ post }: Props) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log("Checking User data ");
+    console.log("Here contains the logged data", data);
+  };
+  // const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
   return (
     <div>
       <Header />
@@ -22,7 +43,7 @@ const Post = ({ post }: Props) => {
       />
       {/* <div className='py-20'>WElcome to the page inside clicks</div> */}
       {/* Article Section */}
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-3xl mx-auto mb-10">
         <article className="w-full mx-auto p-5 bg-secondaryColor/10">
           <h1
             className="font-titleFont font-medium text-[32px]
@@ -86,12 +107,79 @@ const Post = ({ post }: Props) => {
             />
           </div>
         </article>
+        <hr className="max-w-lg my-5 mx-auto border[1px] border-secondaryColor" />
+        <div>
+          <p className="text-xs text-secondayColor uppercase font-titleFont font-bold">
+            How do you Liked this Article?
+          </p>
+          <h3 className="font-titleFont text-3xl font-bold">
+            Leave a Comment Below!
+          </h3>
+          <hr className="py-3 mt-2" />
+          {/* Form Getting Started */}
+          {/* using react hook form */}
+          {/* Generating Id for hook Form  that can track and fetch other feilds as well */}
+          <input
+            {...register("_id")}
+            type="hidden"
+            name="_id"
+            value={post._id}
+          />
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className=" mt-7 flex flex-col gap-6"
+          >
+            <label className="flex flex-col">
+              <span className="font-titleFont font-semibold text-base">
+                Name
+              </span>
+              <input
+                {...(register("name"), { required: true })}
+                className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor
+                py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
+                type="text"
+                placeholder="Enter Your Name"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="font-titleFont font-semibold text-base">
+                Email
+              </span>
+              <input
+                {...(register("email"), { required: true })}
+                className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor
+                py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
+                type="email"
+                placeholder="Enter Your Email"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className="font-titleFont font-semibold text-base">
+                Comment
+              </span>
+              <textarea
+                {...(register("comment"), { required: true })}
+                className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor
+                py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
+                placeholder="Enter Your Comments"
+                rows={6}
+              />
+            </label>
+            <button
+              className="w-full bg-bgColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm
+            hover:bg-secondaryColor duration-300"
+              type="submit"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
       <Footer />
     </div>
   );
 };
-
+// 1:18
 export default Post;
 
 // query to backend sanity
