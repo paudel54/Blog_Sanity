@@ -7,6 +7,7 @@ import PortableText from "react-portable-text";
 import { BsTypeH1 } from "react-icons/bs";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 interface Props {
   post: Post;
@@ -22,6 +23,8 @@ type Inputs = {
 };
 
 const Post = ({ post }: Props) => {
+  const { data: session } = useSession();
+  const [userErr, setUserErr] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const {
     register,
@@ -44,7 +47,11 @@ const Post = ({ post }: Props) => {
       });
   };
   // const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-
+  const handleUserErr = () => {
+    if (!session) {
+      setUserErr("Please Sign in to Comment!");
+    }
+  };
   return (
     <div>
       <Header />
@@ -121,86 +128,117 @@ const Post = ({ post }: Props) => {
           </div>
         </article>
         <hr className="max-w-lg my-5 mx-auto border[1px] border-secondaryColor" />
-        <div>
-          <p className="text-xs text-secondayColor uppercase font-titleFont font-bold">
-            How do you Liked this Article?
-          </p>
-          <h3 className="font-titleFont text-3xl font-bold">
-            Leave a Comment Below!
-          </h3>
-          <hr className="py-3 mt-2" />
-          {/* Form Getting Started */}
-          {/* using react hook form */}
-          {/* Generating Id for hook Form  that can track and fetch other feilds as well */}
-          <input
-            {...register("_id")}
-            type="hidden"
-            name="_id"
-            value={post._id}
-          />
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className=" mt-7 flex flex-col gap-6"
-          >
-            <label className="flex flex-col">
-              <span className="font-titleFont font-semibold text-base">
-                Name
-              </span>
-              <input
-                {...register("name", { required: true })}
-                className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor
-                py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
-                type="text"
-                placeholder="Enter Your Name"
-              />
-            </label>
-            <label className="flex flex-col">
-              <span className="font-titleFont font-semibold text-base">
-                Email
-              </span>
-              <input
-                {...register("email", { required: true })}
-                className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor
-                py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
-                type="email"
-                placeholder="Enter Your Email"
-              />
-            </label>
-            <label className="flex flex-col">
-              <span className="font-titleFont font-semibold text-base">
-                Comment
-              </span>
-              <textarea
-                {...register("comment", { required: true })}
-                className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor
-                py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
-                placeholder="Enter Your Comments"
-                rows={6}
-              />
-            </label>
 
-            <button
-              className="w-full bg-bgColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm
-            hover:bg-secondaryColor duration-300"
-              type="submit"
-            >
-              Submit
-            </button>
-          </form>
-          {/* People's Comment Here */}
-          <div className="w-full flex flex-col p-10 my-10 mx-auto shadow-bgColor shadow-lg space-y-2">
-            <h3 className="text-3xl font-titleFont font-semibold">Comments</h3>
-            <hr />
-            {post.comments.map((comment) => (
-              <div key={comment._id}>
-                <p>
-                  <span className="text-secondaryColor"> {comment.name}</span>{" "}
-                  {comment.comment}
-                </p>
-              </div>
-            ))}
+        {submitted ? (
+          <div className="flex flex-col items-center gap-2 p-10 my-10 bg-bgColor text-white mz-auto">
+            <h1 className="text-2xl font-bold">
+              Thank You for Submitting Your Comment
+            </h1>
+            <p>Once it has been approved, it will appear below!</p>
           </div>
-        </div>
+        ) : (
+          // handle comment Section div
+          <div>
+            <p className="text-xs text-secondayColor uppercase font-titleFont font-bold">
+              How do you Liked this Article?
+            </p>
+            <h3 className="font-titleFont text-3xl font-bold">
+              Leave a Comment Below!
+            </h3>
+            <hr className="py-3 mt-2" />
+            {/* Form Getting Started */}
+            {/* using react hook form */}
+            {/* Generating Id for hook Form  that can track and fetch other feilds as well */}
+            <input
+              {...register("_id")}
+              type="hidden"
+              name="_id"
+              value={post._id}
+            />
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className=" mt-7 flex flex-col gap-6"
+            >
+              <label className="flex flex-col">
+                <span className="font-titleFont font-semibold text-base">
+                  Name
+                </span>
+                <input
+                  {...register("name", { required: true })}
+                  className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor
+                py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
+                  type="text"
+                  placeholder="Enter Your Name"
+                />
+              </label>
+              <label className="flex flex-col">
+                <span className="font-titleFont font-semibold text-base">
+                  Email
+                </span>
+                <input
+                  {...register("email", { required: true })}
+                  className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor
+                py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
+                  type="email"
+                  placeholder="Enter Your Email"
+                />
+              </label>
+              <label className="flex flex-col">
+                <span className="font-titleFont font-semibold text-base">
+                  Comment
+                </span>
+                <textarea
+                  {...register("comment", { required: true })}
+                  className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor
+                py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
+                  placeholder="Enter Your Comments"
+                  rows={6}
+                />
+              </label>
+
+              {session && (
+                <button
+                  className="w-full bg-bgColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm
+              hover:bg-secondaryColor duration-300"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
+            </form>
+            {!session && (
+              <button
+                onClick={handleUserErr}
+                className="w-full bg-bgColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm
+            hover:bg-secondaryColor duration-300"
+              >
+                Submit
+              </button>
+            )}
+            {/* Controlling User Error */}
+            {userErr && (
+              <p className="text-sm font-titleFont text-center font-semibold text-red-500 underline underline-offset-2 my-1 px-4 animate-bounce">
+                <span className="text-base font-bold italic mr-2">!</span>
+                {userErr}
+              </p>
+            )}
+            {/* People's Comment Here */}
+            <div className="w-full flex flex-col p-10 my-10 mx-auto shadow-bgColor shadow-lg space-y-2">
+              <h3 className="text-3xl font-titleFont font-semibold">
+                Comments
+              </h3>
+              <hr />
+              {post.comments.map((comment) => (
+                <div key={comment._id}>
+                  <p>
+                    <span className="text-secondaryColor"> {comment.name}</span>{" "}
+                    {comment.comment}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       <Footer />
     </div>
