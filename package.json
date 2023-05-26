@@ -18,7 +18,8 @@
     "react-portable-text": "^0.6.0",
     "react-slick": "^0.29.0",
     "sanity": "^3.11.1",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "styled-components": "5.2"
   },
   "devDependencies": {
     "@types/node": "18.11.3",

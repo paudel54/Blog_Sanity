@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { MdOutlineMonitor } from "react-icons/md";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { GoComment } from "react-icons/go";
@@ -11,16 +12,18 @@ const BannerBottom = () => {
           My Blog
         </p>
         <h3 className="font-bold text-xl md:text-3xl">
-          These 7 things will change the way you approach learning!
+          These 7 things will change the way you approach !
         </h3>
-        <p className="text-xs text-white/50">Camila Hoffman / 4 weeks ago</p>
+        <p className="text-xs text-white/50">Thakur Prasad Paudel.</p>
       </div>
       <div className="w-full lg:w-[40%] flex items-center justify-center gap-2 lg:gap-8">
         <div className="w-full flex flex-col items-center group">
-          <MdOutlineMonitor className="text-4xl text-gray-300 group-hover:text-white duration-300" />
-          <p className="text-xs md:text-sm font-titleFont text-white/50 group-hover:text-white">
-            watch on youtube
-          </p>
+          <Link target="_blank" href="https://www.youtube.com/">
+            <MdOutlineMonitor className="text-4xl text-gray-300 group-hover:text-white duration-300" />
+            <p className="text-xs md:text-sm font-titleFont text-white/50 group-hover:text-white">
+              watch on youtube
+            </p>
+          </Link>
         </div>
         <div className="w-full flex flex-col items-center justify-center group">
           <IoMdHeartEmpty className="text-4xl text-gray-300 group-hover:text-white duration-300" />

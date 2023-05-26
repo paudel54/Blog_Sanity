@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Slider from "react-slick";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import bannerImgOne from "../public/images/bannerImgOne.jpg";
-import bannerImgTwo from "../public/images/bannerImgTwo.jpg";
-import bannerImgThree from "../public/images/bannerImgThree.jpg";
-import bannerImgFour from "../public/images/bannerImgFour.jpg";
+import bannerImgOne from "../public/images/b2.jpg";
+import bannerImgTwo from "../public/images/b21.jpg";
+import bannerImgThree from "../public/images/b23.jpg";
+import bannerImgFour from "../public/images/5.jpg";
 
 function SampleNextArrow(props: any) {
   const { onClick } = props;

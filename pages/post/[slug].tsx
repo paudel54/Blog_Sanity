@@ -182,6 +182,14 @@ const Post = ({ post }: Props) => {
                   type="email"
                   placeholder="Enter Your Email"
                 />
+                {/* Error on bad Email  */}
+                {errors.email && (
+                  <p className="text-sm font-titleFont font-semibold text-red-500 my-1 px-4">
+                    <span className="text-base font-bold italic mr-2">
+                      Email is Required!
+                    </span>
+                  </p>
+                )}
               </label>
               <label className="flex flex-col">
                 <span className="font-titleFont font-semibold text-base">
@@ -194,6 +202,12 @@ const Post = ({ post }: Props) => {
                   placeholder="Enter Your Comments"
                   rows={6}
                 />
+                {errors.comment && (
+                  <p className="text-sm font-titleFont font-semibold text-red=500 my-1 px-4">
+                    <span className="text-base font-bold italic mr-2"></span>
+                    Please Enter Your Comment
+                  </p>
+                )}
               </label>
 
               {session && (
