@@ -19,6 +19,11 @@ export default function Home({ posts }: Props) {
       <Head>
         <title>MGML Blogs</title>
         {/* <link rel="icon" href="/smallLogo.ico" /> */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6297241938400441"
+          crossOrigin="anonymous"
+        ></script>
       </Head>
 
       <main className="font-bodyFont">

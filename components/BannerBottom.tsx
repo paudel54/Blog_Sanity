@@ -8,11 +8,12 @@ const BannerBottom = () => {
   return (
     <div className="max-w-7xl mx-auto flex flex-col gap-10 lg:gap-0 lg:flex-row justify-center items-center h-auto lg:h-60 bg-bgColor text-white py-10 px-8 -mt-20 z-50">
       <div className="w-full lg:w-[60%] flex flex-col gap-3">
-        <p className="text-sm uppercase font-bodyFont font-semibold text-white/50">
+        <p className="text-sm uppercase font-bodyFont font-semibold text-white/50 -mt-5 md:mt-5">
           My Blog
         </p>
         <h3 className="font-bold text-xl md:text-3xl">
-          These 7 things will change the way you approach !
+          A Journey through Quality Education and Integrated Learning with an
+          MGML Methodology.
         </h3>
         <p className="text-xs text-white/50">Thakur Prasad Paudel.</p>
       </div>
